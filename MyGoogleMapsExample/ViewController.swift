@@ -36,8 +36,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let userLocation = locations.first else {return}
         
+        guard let userLocation = locations.first else {return}
         let coordinate = userLocation.coordinate
         
         // Create a GMSCameraPosition that tells the map to display the
@@ -47,9 +47,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // Creates a marker in the center of the map.
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
+        // marker.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        marker.position = coordinate
+        marker.title = "London"
+        marker.snippet = "UK"
         marker.map = mapView
         
     }
