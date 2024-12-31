@@ -7,12 +7,18 @@
 
 import UIKit
 import GoogleMaps
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        setupLocationManager()
+        
         GMSServices.provideAPIKey("AIzaSyDrUlZt62YkPWakLIazIMbSdGWTjSYuMyQ")
         // Create a GMSCameraPosition that tells the map to display the
         // coordinate -33.86,151.20 at zoom level 6.
@@ -32,6 +38,13 @@ class ViewController: UIViewController {
         
     }
 
+    func setupLocationManager() {
+        locationManager.delegate = self
+        // Request the location from the user
+        locationManager.requestWhenInUseAuthorization()
+        // Start the location tracking
+        locationManager.startUpdatingLocation()
+    }
 
 }
 
