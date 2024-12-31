@@ -26,6 +26,10 @@ class ViewController: UIViewController {
         marker.title = "Sydney"
         marker.snippet = "Australia"
         marker.map = mapView
+        
+        // Printing the license of the google services of map we are using
+        print("License: \n\n\(GMSServices.openSourceLicenseInfo())")
+        
     }
 
 
