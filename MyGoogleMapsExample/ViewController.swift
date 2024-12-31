@@ -19,19 +19,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         setupLocationManager()
         
+        // Added the Api key for the Google map
         GMSServices.provideAPIKey("AIzaSyDrUlZt62YkPWakLIazIMbSdGWTjSYuMyQ")
-        // Create a GMSCameraPosition that tells the map to display the
-        // coordinate -33.86,151.20 at zoom level 6.
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
-        self.view.addSubview(mapView)
-        
-        // Creates a marker in the center of the map.
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = mapView
         
         // Printing the license of the google services of map we are using
         print("License: \n\n\(GMSServices.openSourceLicenseInfo())")
@@ -44,6 +33,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         // Start the location tracking
         locationManager.startUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation = locations.first else {return}
+        
+        let coordinate = userLocation.coordinate
+        
+        // Create a GMSCameraPosition that tells the map to display the
+        let camera = GMSCameraPosition.camera(withLatitude: coordinate.latitude, longitude: coordinate.longitude, zoom: 6.0)
+        let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
+        self.view.addSubview(mapView)
+        
+        // Creates a marker in the center of the map.
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        marker.title = "Sydney"
+        marker.snippet = "Australia"
+        marker.map = mapView
+        
     }
 
 }
